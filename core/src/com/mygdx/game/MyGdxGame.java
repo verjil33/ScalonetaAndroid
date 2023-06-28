@@ -5,8 +5,9 @@ import javax.swing.*;
 
 import org.w3c.dom.Text;
 
-import java.util.*;
+
 import com.badlogic.gdx.ApplicationAdapter;
+import java.util.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
 import com.badlogic.gdx.math.MathUtils;
@@ -29,6 +31,7 @@ import java.util.Iterator;
 public class MyGdxGame extends ApplicationAdapter {
 
 	int vidas = 10;
+	int tiempo=0;
 
 	//private Array<Rectangle> arr = new Array<Rectangle>();	
 	
@@ -121,6 +124,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Music dropSound;
 	private Music rainMusic;
 	private SpriteBatch batch;
+	private BitmapFont font;
 	private OrthographicCamera camera;
 	private Rectangle bucket;
 
@@ -154,30 +158,31 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Array<Rectangle> paulDrops;
 	private Array<Rectangle> pezzelaDrops;
 	private Array<Rectangle> rodriguezDrops;
-	private Array<Rectangle> rulliDrops;	
+	private Array<Rectangle> rulliDrops;
 	private Array<Rectangle> tagliaDrops;
-	
+
 	private Array<Rectangle> tortugaDrops;
 	private Array<Rectangle> lukaDrops;
 	private Array<Rectangle> neuerDrops;
-	private Array<Rectangle> kaneDrops;	
+	private Array<Rectangle> kaneDrops;
 	private Array<Rectangle> boboDrops;
 	private Array<Rectangle> griezmanDrops;
 	private Array<Rectangle> ronaldoDrops;
 	private Array<Rectangle> viniDrops;
-	
+
 	//#endregion
 
 	private Texture[] vect = new Texture[26];
 
-	
+
 	@Override
 	public void create() {
 
-		
+
+
 
 		// load the images for the droplet and the bucket, 64x64 pixels each
-		//and the gameOverBall	
+		//and the gameOverBall
 
 		//#region textures
 
@@ -187,7 +192,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		bucketImage = new Texture(Gdx.files.internal("scaloni.png"));
 		messiImage = new Texture(Gdx.files.internal("messi2.png"));
 		acuñaImage= new Texture(Gdx.files.internal("acuña.png"));
-		almadaImage= new Texture(Gdx.files.internal("almada.png"));		
+		almadaImage= new Texture(Gdx.files.internal("almada.png"));
 		armaniImage= new Texture(Gdx.files.internal("armani.png"));
 		beckamImage= new Texture(Gdx.files.internal("beckam.png"));
 		coloImage= new Texture(Gdx.files.internal("colo.png"));
@@ -220,38 +225,39 @@ public class MyGdxGame extends ApplicationAdapter {
 		kaneImage = new Texture(Gdx.files.internal("kane.png"));
 		ronaldoImage = new Texture(Gdx.files.internal("ronaldo.png"));
 		viniImage = new Texture(Gdx.files.internal("vinidinho.png"));
-		
+
 //#endregion
 
 		// load the drop sound effect and the rain background "music"
 		dropSound = Gdx.audio.newMusic(Gdx.files.internal("drop.wav"));
 		dropSound.setVolume(0.0f);
 		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-		
+
 		// start the playback of the background music immediately
 		rainMusic.setLooping(true);
-		rainMusic.setVolume(0.0f);
+		rainMusic.setVolume(2.0f);
 		rainMusic.play();
-	
+
 
 		// create the camera and the SpriteBatch
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1500, 500);
 		batch = new SpriteBatch();
+		font = new BitmapFont();
 
 		titulares = new Rectangle();
 		titulares.x = 800;
-		titulares.y = 50; 
+		titulares.y = 50;
 		titulares.width = 64;
 		titulares.height = 64;
 
 		suplentes = new Rectangle();
 		suplentes.x = 1250;
-		suplentes.y = 0; 
+		suplentes.y = 0;
 		suplentes.width = 64;
 		suplentes.height = 64;
 
-		// create a Rectangle to logically represent the bucket		
+		// create a Rectangle to logically represent the bucket
 		bucket = new Rectangle();
 		bucket.x = 650 / 2 - 64 / 2; // center the bucket horizontally
 		bucket.y = 20; // bottom left corner of the bucket is 20 pixels above the bottom screen edge
@@ -259,19 +265,19 @@ public class MyGdxGame extends ApplicationAdapter {
 		bucket.height = 64;
 
 		// create the raindrops array and spawn the first raindrop
-		
-		
+
+
 
 		// create the acidRaindrops array and spawn the first ball
-		
-		
+
+
 
 		// create the goldenRaindrops array and spawn the first ball
 		//#region arraydefin
 
 		messiDrops= new Array<Rectangle>();
 		acuñaDrops= new Array<Rectangle>();
-		almadaDrops= new Array<Rectangle>();		
+		almadaDrops= new Array<Rectangle>();
 		armaniDrops= new Array<Rectangle>();
 		beckamDrops= new Array<Rectangle>();
 		coloDrops= new Array<Rectangle>();
@@ -295,7 +301,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		rodriguezDrops= new Array<Rectangle>();
 		rulliDrops= new Array<Rectangle>();
 		tagliaDrops= new Array<Rectangle>();
-		
+
 		tortugaDrops = new Array<Rectangle>();
 		lukaDrops= new Array<Rectangle>();
 		neuerDrops= new Array<Rectangle>();
@@ -304,9 +310,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		griezmanDrops= new Array<Rectangle>();
 		ronaldoDrops= new Array<Rectangle>();
 		viniDrops= new Array<Rectangle>();
-		//#endregion	
-		
-		
+		//#endregion
+
+
 
 		//score = 0;
 
@@ -321,7 +327,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			messiDrop.y = 960;
 			messiDrop.width = 64;
 			messiDrop.height = 64;
-			messiDrops.add(messiDrop);		
+			messiDrops.add(messiDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnacuñaDrop(){
@@ -330,8 +336,8 @@ public class MyGdxGame extends ApplicationAdapter {
 			acuñaDrop.y = 960;
 			acuñaDrop.width = 64;
 			acuñaDrop.height = 64;
-			acuñaDrops.add(acuñaDrop);		
-			//lastacuñaDropTime = TimeUtils.nanoTime();	
+			acuñaDrops.add(acuñaDrop);
+			//lastacuñaDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnalmadaDrop(){
 			Rectangle alamadaDrop = new Rectangle();
@@ -339,7 +345,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			alamadaDrop.y = 960;
 			alamadaDrop.width = 64;
 			alamadaDrop.height = 64;
-			almadaDrops.add(alamadaDrop);		
+			almadaDrops.add(alamadaDrop);
 			//lastalmadaDropTime = TimeUtils.nanoTime();
 		}
 
@@ -349,7 +355,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			armaniDrop.y = 960;
 			armaniDrop.width = 64;
 			armaniDrop.height = 64;
-			armaniDrops.add(armaniDrop);		
+			armaniDrops.add(armaniDrop);
 			//lastarmaniDropTime = TimeUtils.nanoTime();
 		}
 
@@ -359,16 +365,16 @@ public class MyGdxGame extends ApplicationAdapter {
 			coloDrop.y = 960;
 			coloDrop.width = 64;
 			coloDrop.height = 64;
-			coloDrops.add(coloDrop);		
+			coloDrops.add(coloDrop);
 			//lastacuñaDropTime = TimeUtils.nanoTime();
-		}	
+		}
 		private void spawnbeckamDrop(){
 			Rectangle beckamDrop = new Rectangle();
 			beckamDrop.x = MathUtils.random(0, 650-64);
 			beckamDrop.y = 960;
 			beckamDrop.width = 64;
 			beckamDrop.height = 64;
-			beckamDrops.add(beckamDrop);		
+			beckamDrops.add(beckamDrop);
 			//lastbeckamDropTime = TimeUtils.nanoTime();
 		}
 		private void spawncorreaDrop(){
@@ -377,7 +383,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			correaDrop.y = 960;
 			correaDrop.width = 64;
 			correaDrop.height = 64;
-			correaDrops.add(correaDrop);		
+			correaDrops.add(correaDrop);
 			//lastcorreaDropTime = TimeUtils.nanoTime();
 		}
 		private void spawncutiDrop(){
@@ -386,7 +392,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			cutiDrop.y = 960;
 			cutiDrop.width = 64;
 			cutiDrop.height = 64;
-			cutiDrops.add(cutiDrop);		
+			cutiDrops.add(cutiDrop);
 			//lastcutiDropTime = TimeUtils.nanoTime();
 		}
 		private void spawndibuDrop(){
@@ -395,7 +401,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			dibuDrop.y = 960;
 			dibuDrop.width = 64;
 			dibuDrop.height = 64;
-			dibuDrops.add(dibuDrop);		
+			dibuDrops.add(dibuDrop);
 			//lastdibuDropTime = TimeUtils.nanoTime();
 		}
 		private void spawndybalaDrop(){
@@ -404,7 +410,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			dybalaDrop.y = 960;
 			dybalaDrop.width = 64;
 			dybalaDrop.height = 64;
-			dybalaDrops.add(dybalaDrop);		
+			dybalaDrops.add(dybalaDrop);
 			//lastDybalaDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnenzoDrop(){
@@ -413,7 +419,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			enzoDrop.y = 960;
 			enzoDrop.width = 64;
 			enzoDrop.height = 64;
-			enzoDrops.add(enzoDrop);		
+			enzoDrops.add(enzoDrop);
 			//lastenzoDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnfideoDrop(){
@@ -422,7 +428,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			fideoDrop.y = 960;
 			fideoDrop.width = 64;
 			fideoDrop.height = 64;
-			fideoDrops.add(fideoDrop);		
+			fideoDrops.add(fideoDrop);
 			//lastfideoDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnfoythDrop(){
@@ -431,7 +437,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			foythDrop.y = 960;
 			foythDrop.width = 64;
 			foythDrop.height = 64;
-			foythDrops.add(foythDrop);		
+			foythDrops.add(foythDrop);
 			//lastfoythDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnjulianDrop(){
@@ -440,7 +446,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			julianDrop.y = 960;
 			julianDrop.width = 64;
 			julianDrop.height = 64;
-			julianDrops.add(julianDrop);		
+			julianDrops.add(julianDrop);
 			//lastjulianDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnlautaDrop(){
@@ -449,7 +455,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			lautaDrop.y = 960;
 			lautaDrop.width = 64;
 			lautaDrop.height = 64;
-			lautaDrops.add(lautaDrop);		
+			lautaDrops.add(lautaDrop);
 			//lastacuñaDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnlichaDrop(){
@@ -458,7 +464,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			lichaDrop.y = 960;
 			lichaDrop.width = 64;
 			lichaDrop.height = 64;
-			lichaDrops.add(lichaDrop);		
+			lichaDrops.add(lichaDrop);
 			//lastlichaDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnmolinaDrop(){
@@ -467,7 +473,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			molinaDrop.y = 960;
 			molinaDrop.width = 64;
 			molinaDrop.height = 64;
-			molinaDrops.add(molinaDrop);		
+			molinaDrops.add(molinaDrop);
 			//lastmolinaDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnmontielDrop(){
@@ -476,7 +482,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			montielDrop.y = 960;
 			montielDrop.width = 64;
 			montielDrop.height = 64;
-			montielDrops.add(montielDrop);		
+			montielDrops.add(montielDrop);
 			//lastmontielDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnotamendiDrop(){
@@ -485,7 +491,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			otamendiDrop.y = 960;
 			otamendiDrop.width = 64;
 			otamendiDrop.height = 64;
-			otamendiDrops.add(otamendiDrop);		
+			otamendiDrops.add(otamendiDrop);
 			//lastotamendiDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnpalaciosDrop(){
@@ -494,7 +500,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			palaciosDrop.y = 960;
 			palaciosDrop.width = 64;
 			palaciosDrop.height = 64;
-			palaciosDrops.add(palaciosDrop);		
+			palaciosDrops.add(palaciosDrop);
 			//lastpalaciosDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnparedesDrop(){
@@ -503,7 +509,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			paredesDrop.y = 960;
 			paredesDrop.width = 64;
 			paredesDrop.height = 64;
-			paredesDrops.add(paredesDrop);		
+			paredesDrops.add(paredesDrop);
 			//lastparedesDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnpaulDrop(){
@@ -512,7 +518,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			paulDrop.y = 960;
 			paulDrop.width = 64;
 			paulDrop.height = 64;
-			paulDrops.add(paulDrop);		
+			paulDrops.add(paulDrop);
 			//lastpaulDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnpezzelaDrop(){
@@ -521,7 +527,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			pezzelaDrop.y = 960;
 			pezzelaDrop.width = 64;
 			pezzelaDrop.height = 64;
-			pezzelaDrops.add(pezzelaDrop);		
+			pezzelaDrops.add(pezzelaDrop);
 			//lastpezzelaDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnrodriguezDrop(){
@@ -530,7 +536,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			rodriguezDrop.y = 960;
 			rodriguezDrop.width = 64;
 			rodriguezDrop.height = 64;
-			rodriguezDrops.add(rodriguezDrop);		
+			rodriguezDrops.add(rodriguezDrop);
 			//lastrodriguezDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnrulliDrops(){
@@ -539,7 +545,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			rulliDrop.y = 960;
 			rulliDrop.width = 64;
 			rulliDrop.height = 64;
-			rulliDrops.add(rulliDrop);		
+			rulliDrops.add(rulliDrop);
 			//lastrulliDropTime = TimeUtils.nanoTime();
 		}
 		private void spawntagliaDrop(){
@@ -548,17 +554,17 @@ public class MyGdxGame extends ApplicationAdapter {
 			tagliaDrop.y = 960;
 			tagliaDrop.width = 64;
 			tagliaDrop.height = 64;
-			tagliaDrops.add(tagliaDrop);		
+			tagliaDrops.add(tagliaDrop);
 			//lasttagliaDropTime = TimeUtils.nanoTime();
 		}
-	
+
 		private void spawnTortugaDrop() {
 			Rectangle tortugaDrop = new Rectangle();
 			tortugaDrop.x = MathUtils.random(0, 650-64);
 			tortugaDrop.y = 960;
 			tortugaDrop.width = 64;
 			tortugaDrop.height = 64;
-			tortugaDrops.add(tortugaDrop);		
+			tortugaDrops.add(tortugaDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
 
@@ -568,7 +574,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			lukaDrop.y = 960;
 			lukaDrop.width = 64;
 			lukaDrop.height = 64;
-			lukaDrops.add(lukaDrop);		
+			lukaDrops.add(lukaDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
 
@@ -578,7 +584,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			neuerDrop.y = 960;
 			neuerDrop.width = 64;
 			neuerDrop.height = 64;
-			neuerDrops.add(neuerDrop);		
+			neuerDrops.add(neuerDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnKaneDrop() {
@@ -587,7 +593,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			kaneDrop.y = 960;
 			kaneDrop.width = 64;
 			kaneDrop.height = 64;
-			kaneDrops.add(kaneDrop);		
+			kaneDrops.add(kaneDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnBoboDrop() {
@@ -596,7 +602,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			boboDrop.y = 960;
 			boboDrop.width = 64;
 			boboDrop.height = 64;
-			boboDrops.add(boboDrop);						
+			boboDrops.add(boboDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnGriezmanDrop() {
@@ -605,7 +611,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			griezmanDrop.y = 960;
 			griezmanDrop.width = 64;
 			griezmanDrop.height = 64;
-			griezmanDrops.add(griezmanDrop);		
+			griezmanDrops.add(griezmanDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnRonaldoDrop() {
@@ -614,7 +620,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			ronaldoDrop.y = 960;
 			ronaldoDrop.width = 64;
 			ronaldoDrop.height = 64;
-			ronaldoDrops.add(ronaldoDrop);		
+			ronaldoDrops.add(ronaldoDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
 		private void spawnViniDrop() {
@@ -623,16 +629,16 @@ public class MyGdxGame extends ApplicationAdapter {
 			viniDrop.y = 960;
 			viniDrop.width = 64;
 			viniDrop.height = 64;
-			viniDrops.add(viniDrop);		
+			viniDrops.add(viniDrop);
 			//lastMessiDropTime = TimeUtils.nanoTime();
 		}
-	 
-		//#endregion
-	
 
-	
-	
-	
+		//#endregion
+
+
+
+
+
 		@Override
 	public void render() {
 
@@ -654,9 +660,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(bucketImage, bucket.x, bucket.y);
 
+		font.draw(batch,"Consigue a los jugadores de la seleccion argentina. Si agarras a los de otras selecciones pierdes vidas. Tienes: "+vidas,10,20);
 		batch.draw(titularesImage, titulares.x, titulares.y);
 		//batch.draw(suplentesImage, suplentes.x, suplentes.y);
-		
+
 		//#region jugadoresObtenidos
 
 
@@ -742,7 +749,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 
 		//#endregion
-		
+
 		//#region fors
 
 		for(Rectangle messiDrop: messiDrops) {
@@ -753,7 +760,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		for(Rectangle almadaDrop: almadaDrops) {
 			batch.draw(almadaImage, almadaDrop.x, almadaDrop.y);
-		}		
+		}
 		for(Rectangle armaniDrop: armaniDrops) {
 			batch.draw(armaniImage, armaniDrop.x, armaniDrop.y);
 		}
@@ -833,10 +840,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		for(Rectangle neuerDrop: neuerDrops) {
 			batch.draw(neuerImage, neuerDrop.x, neuerDrop.y);
-		}		
+		}
 		for(Rectangle boboDrop: boboDrops) {
 			batch.draw(boboImage, boboDrop.x, boboDrop.y);
-		}		
+		}
 		for(Rectangle griezmanDrop: griezmanDrops) {
 			batch.draw(griezmanImage, griezmanDrop.x, griezmanDrop.y);
 		}
@@ -849,12 +856,37 @@ public class MyGdxGame extends ApplicationAdapter {
 		for(Rectangle kaneDrop: kaneDrops) {
 			batch.draw(kaneImage, kaneDrop.x, kaneDrop.y);
 		}
-		
+
 
 		//#endregion
 
-		
-		
+			//#region Final
+
+			if(scaloneta >= 26){
+				//JFrame jFrame = new JFrame();
+				//JOptionPane.showMessageDialog(jFrame, "Completaste la Scaloneta! ahora a ganar utro mundial pibe");
+				font.draw(batch,"Completaste la Scaloneta! ahora a ganar utro mundial pibe ",500,250);
+
+				tiempo++;
+				if(tiempo >= 150){
+					System.exit(0);
+
+				}
+			}
+
+			if (vidas <= 0){
+				//JFrame jFrame = new JFrame();
+				//JOptionPane.showMessageDialog(jFrame, "Perdiste loco");
+				font.draw(batch,"Perdiste loco",500,250);
+				tiempo++;
+				if(tiempo >= 150){
+					System.exit(0);
+
+				}
+			}
+			//#endregion
+
+
 		batch.end();
 
 		// process user input
@@ -874,7 +906,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(bucket.y < 0) bucket.y = 0;
 		if(bucket.y > 800 - 64) bucket.y = 960 - 64;
 
-		// check if we need to create a new raindrop, acidRaindrop or goldenRaindrop		
+		// check if we need to create a new raindrop, acidRaindrop or goldenRaindrop
 
 		//#region random
 
@@ -906,14 +938,14 @@ public class MyGdxGame extends ApplicationAdapter {
 		else if(i == 8){
 			spawnfideoDrop();
 		}
-		else if(i == 9){			
+		else if(i == 9){
 			spawnfoythDrop();
 		}
 		else if(i == 10){
 			spawnjulianDrop();
 		}
 		else if(i == 11){
-			spawnlautaDrop();	
+			spawnlautaDrop();
 		}
 		else if(i == 12){
 			spawnlichaDrop();
@@ -922,28 +954,28 @@ public class MyGdxGame extends ApplicationAdapter {
 			spawnmolinaDrop();
 		}
 		else if(i == 14){
-			spawnmontielDrop();	 
+			spawnmontielDrop();
 		}
 		else if(i == 15){
-			spawnotamendiDrop();	
+			spawnotamendiDrop();
 		}
 		else if(i == 16){
-			spawnpalaciosDrop();			
+			spawnpalaciosDrop();
 		}
 		else if(i == 17){
-			spawnparedesDrop();				
+			spawnparedesDrop();
 		}
 		else if(i == 18){
-			spawnpaulDrop();			
+			spawnpaulDrop();
 		}
 		else if(i == 19){
-			spawnpezzelaDrop();			
+			spawnpezzelaDrop();
 		}
 		else if(i == 20){
-			spawnrodriguezDrop();			   
+			spawnrodriguezDrop();
 		}
 		else if(i == 21){
-			spawnrulliDrops();		   
+			spawnrulliDrops();
 		}
 		else if(i == 22){
 			spawntagliaDrop();
@@ -981,7 +1013,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		else if(i == 33){
 			spawnKaneDrop();
 		}
-		
+
 
 
 
@@ -1004,8 +1036,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		*/
 		// move the gameOverBalls, remove any that are beneath the bottom edge of
-		// the screen. If any hits the bucket, the game ends.	
-		
+		// the screen. If any hits the bucket, the game ends.
+
 
 		//#region spawner
 
@@ -1053,7 +1085,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			}
 		}
 
-		
+
 		for (Iterator<Rectangle> iter = armaniDrops.iterator(); iter.hasNext(); ) {
 			Rectangle armaniDrop = iter.next();
 			armaniDrop.y -= 250 * Gdx.graphics.getDeltaTime();
@@ -1133,7 +1165,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				if(!dibuTaken){
 					dibuTaken = true;
 					scaloneta++;
-					vect[0] = dibuImage;					
+					vect[0] = dibuImage;
 				}
 				iter.remove();
 			}
@@ -1162,7 +1194,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					enzoTaken = true;
 					scaloneta++;
 					vect[6] = enzoImage;
-					
+
 				}
 				iter.remove();
 			}
@@ -1362,7 +1394,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				}
 				iter.remove();
 			}
-		}		
+		}
 		for (Iterator<Rectangle> iter = palaciosDrops.iterator(); iter.hasNext(); ) {
 			Rectangle palaciosDrop = iter.next();
 			palaciosDrop.y -= 250 * Gdx.graphics.getDeltaTime();
@@ -1461,20 +1493,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//#endregion
 
-		//#region Final
 
-		if(scaloneta >= 26){
-			JFrame jFrame = new JFrame();
-			JOptionPane.showMessageDialog(jFrame, "Completaste la Scaloneta! ahora a ganar utro mundial pibe");
-			System.exit(0);
-		}	
-		
-		if (vidas <= 0){
-			JFrame jFrame = new JFrame();
-			JOptionPane.showMessageDialog(jFrame, "Perdiste loco");
-			System.exit(0);
-		}
-		//#endregion
 
 	}
 	@Override
