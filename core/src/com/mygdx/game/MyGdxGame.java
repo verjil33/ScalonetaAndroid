@@ -117,6 +117,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private Texture titularesImage;	
 	//private Texture suplentesImage;
+	private Texture canchaImage;
 
 
 	private int scaloneta;
@@ -130,6 +131,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private Rectangle titulares;
 	private Rectangle suplentes;
+	private Rectangle cancha;
 	//private string text;
 
 
@@ -188,6 +190,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		titularesImage = new Texture(Gdx.files.internal("titulares.png"));
 		//suplentesImage = new Texture(Gdx.files.internal("suplentes.png"));
+		canchaImage = new Texture(Gdx.files.internal("cancha2.jpg"));
+
 
 		bucketImage = new Texture(Gdx.files.internal("scaloni.png"));
 		messiImage = new Texture(Gdx.files.internal("messi2.png"));
@@ -256,6 +260,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		suplentes.y = 0;
 		suplentes.width = 64;
 		suplentes.height = 64;
+
+		cancha = new Rectangle();
+		cancha.x = 0;
+		cancha.y = 0;
+		cancha.width = 64;
+		cancha.height = 64;
 
 		// create a Rectangle to logically represent the bucket
 		bucket = new Rectangle();
@@ -658,10 +668,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		// begin a new batch and draw the bucket and
 		// all drops and balls
 		batch.begin();
-		batch.draw(bucketImage, bucket.x, bucket.y);
+			batch.draw(canchaImage, cancha.x, cancha.y);
+
+			batch.draw(bucketImage, bucket.x, bucket.y);
 
 		font.draw(batch,"Consigue a los jugadores de la seleccion argentina. Si agarras a los de otras selecciones pierdes vidas. Tienes: "+vidas,10,20);
 		batch.draw(titularesImage, titulares.x, titulares.y);
+
 		//batch.draw(suplentesImage, suplentes.x, suplentes.y);
 
 		//#region jugadoresObtenidos
@@ -1503,6 +1516,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		//#region dispose
 		titularesImage.dispose();
 		//suplentesImage.dispose();
+		canchaImage.dispose();
 
 		bucketImage.dispose();
 		dropSound.dispose();
@@ -1535,7 +1549,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		rulliImage.dispose();
 		scaloniImage.dispose();
 		tagliaImage.dispose();
+
+
+
 		//#endregion
+
 
 
 	}
