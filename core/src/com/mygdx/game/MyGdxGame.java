@@ -890,7 +890,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			if (vidas <= 0){
 				//JFrame jFrame = new JFrame();
 				//JOptionPane.showMessageDialog(jFrame, "Perdiste loco");
-				font.draw(batch,"Perdiste loco",500,250);
+				font.draw(batch,"Segui participando, ahora esperate otros 4 años",500,250);
 				tiempo++;
 				if(tiempo >= 150){
 					System.exit(0);
